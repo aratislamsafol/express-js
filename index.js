@@ -41,6 +41,23 @@ app.get("/india", function(req, res){
     res.send('this is india')
 })
 
+app.get('/head', (req, res)=> {
+    res.append('name', 'arat');
+     res.append('age', 27);
+     res.send("HEader");
+})
+
+app.get('/cookiesSet', (req, res)=> {
+    res.cookie('name', 'arat')
+    res.cookie('age', '30');
+    res.end("cookies send success");
+})
+
+app.get('/cookiesClear', (req, res)=> {
+    res.clearCookie('name')
+    res.end("cookies send success");
+})
+
 
 
 app.listen(8000, ()=>console.log("successfully listen"));
