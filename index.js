@@ -29,4 +29,18 @@ app.post("/about", (req, res)=> {
     res.json(myJsonArr);
 })
 
+app.get("/download", function(req, res){
+    res.download('./upload/shirt.png')
+})
+
+app.get("/bangladesh", function(req, res){
+    res.redirect('http://localhost:8000/india')
+})
+
+app.get("/india", function(req, res){
+    res.send('this is india')
+})
+
+
+
 app.listen(8000, ()=>console.log("successfully listen"));
