@@ -5,34 +5,24 @@ app = express();
 
 app.use(express.static('public'))
 
-// parse json body
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
-// Json Application request
-app.post("/", (req, res)=>{
-    res.send(JSON.stringify(req.body));
+// application level middleware
+app.use(function (req, res, next) {
+    console.log("Application level Middleware")
+    next();
 })
-// file upload
 
-var storage = multer.diskStorage({
-    destination: function(req, res, cb) {
-        cb(null, './upload')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
+app.get('/', (req, res)=> {
+    res.send("Home Page")
+})
 
-var upload = multer({storage:storage }).single('myfile');
-
-app.post("/upload", (req, res)=>{
-    upload(req, res, (err)=> {
-        if(err) {
-            return res.end("Error Uploading File")
-        }else {
-            res.end("file Uploaded")
-        }
-    })
+app.get('/contact', (req, res)=> {
+    res.send("Contact Page")
+})
+// spacifing routing middleware
+app.use('/terms', (req, res, next)=> {
+    console.log("i am routing middleware");
+    next();
+    res.send("terms Page");
 })
 
 app.listen(8000, ()=>console.log("successfully Hit the Server"));
