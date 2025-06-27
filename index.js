@@ -1,16 +1,14 @@
 const express = require("express");
-var bodyParser = require("body-parser");
+const multers = require("multer");
+var multer =multers();
 
 app = express();
-app.use(bodyParser.json());
+app.use(multer.array());
+app.use(express.static('public'))
 
 // Json Application request
 app.post("/", (req, res)=>{
-    let jsonData = req.body;
-    let name = req.body.name;
-    let city = req.body['city'];
-    let stringify = JSON.stringify(jsonData)
-    res.send(stringify + " " + name +" " + city);
+    res.send(JSON.stringify(req.body));
 })
 
 app.listen(8000, ()=>console.log("successfully Hit the Server"));
